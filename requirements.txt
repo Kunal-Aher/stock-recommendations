@@ -62,3 +62,4 @@ Werkzeug
 wrapt
 xgboost
 yfinance
+gunicorn
