@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">  <!-- Add a language attribute -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #428bca;
+            align-items: center;
+            color: #5fb5ff;
+            text-align: center;
+            font-family: sans-serif;
+            font-size: xxx-large;
+            background-color:#aed9ff;
+            border-radius: 20px;
+            padding: 20px;
+
+        }
+        form {
+            margin-bottom: 20px;
+            width: auto;
+            background-color: #aed9ff;
+            padding: 30px ;
+            border-radius: 20px;
+        }
+        input[type="text"] {
+            display: flexbox;
+            padding: 8px;
+            border: 1px solid #ddd;
+            display: block;
+            border-radius: 4px;
+            margin-top: 12px;
+        }
+        
+        input[type="submit"] {
+            margin: 10px;
+            width: auto;
+            padding: 20px;
+            background-color: #428bca;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0bbfe8;
+        }
+        .stock-info {
+            position: relative;
+            margin-top: 20px;
+            width: auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background-color: #fff;
+        }
+        .chart {
+            margin-top: 20px;
+            border-radius: 20px;
+        }
+        .recommendation {
+            font-weight: bold;
+            color: #27ae60; /* Green color for positive recommendation */
+        }
+        /* Style for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ffffff;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Market Analysis</h1>
+    <form method="post">
+        <label for="symbol">Enter Stock Symbol:</label>
+        <input type="text" id="symbol" name="symbol" required>
+
+        <!-- Indicator Checkboxes -->
+        <p>Select Indicators:</p>
+        <input type="checkbox" id="all" name="indicators" value="all">
+        <label for="all">All</label><br>
+
+        <input type="checkbox" id="rsi" name="indicators" value="rsi">
+        <label for="rsi">RSI</label><br>
+
+        <input type="checkbox" id="macd" name="indicators" value="macd">
+        <label for="macd">MACD</label><br>
+
+         <input type="checkbox" id="sma" name="indicators" value="sma">
+        <label for="sma">SMA</label><br>
+
+         <input type="checkbox" id="ema" name="indicators" value="ema">
+        <label for="ema">EMA</label><br>
+
+        <input type="submit" value="Analyze">
+    </form>
+
+    {% if stock_info %}
+        <div class="stock-info">
+            <h2>Stock Information:</h2>
+            <p>{{ stock_info }}</p>
+            {% if aggregated_price %}
+                <p><b>Aggregated Predicted Price:</b> {{ aggregated_price }}</p>
+            {% endif %}
+            {% if recommendation %}
+                <p class="recommendation"><b>Recommendation:</b> {{recommendation}}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if chart_html %}
+        <div class="chart">
+            <h2>Price Chart:</h2>
+            {{ chart_html | safe }}
+        </div>
+    {% endif %}
+
+    {% if all_charts_html %}
+        <div class="chart">
+            <h2>All Charts:</h2>
+            {{ all_charts_html | safe }}
+        </div>
+    {% endif %}
+
+     {% if indicator_chart_html %}
+        <div class="chart">
+            <h2>Indicator Charts:</h2>
+            {{ indicator_chart_html | safe }}
+        </div>
+    {% endif %}
+
+    {% if dataframe %}
+        <div class="dataframe">
+            <h2>Dataframe:</h2>
+            {{ dataframe | safe }}
+        </div>
+    {% endif %}
+
+    <script>
+        document.getElementById('all').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('input[name="indicators"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = this.checked;
+            }
+        });
+    </script>
+
+</body>
+</html>
